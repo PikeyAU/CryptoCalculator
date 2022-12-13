@@ -10,7 +10,7 @@ const Navbar = () => {
             justifyContent: 'space-around',
             width: '100vw',
             height: '5vh',
-            marginBottom: '5px',
+            margin: 'auto'
             
         },
         link: {

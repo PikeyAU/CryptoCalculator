@@ -35,7 +35,7 @@ const HomeCard = (props) => {
         justifyContent: 'center',
         border: 'solid white 1px',
         height: '20vh',
-        width: '60vw',
+        width: '20vw',
         margin: 'auto',
         //rounded corners
         borderRadius: '15px',

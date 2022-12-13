@@ -6,8 +6,9 @@ import NavBanner from './components/NavBanner';
 
 const grid_styles = {
 
-    display: 'grid',
-    gridGap: '20px',
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '30px',
     width: '100vw',
     color: 'white',
     fontFamily: 'Eras Light ITC',
@@ -16,13 +17,15 @@ const grid_styles = {
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '100px',
-    
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)'
+
 };
 
 const Home = () => {
     return (
-        <div style={{backgroundColor: '#282C34', height: '100vh'}}>
+        <div style={{backgroundColor: '#282C34', height: '100vh', position: 'relative'}}>
             <Navbar />
             <NavBanner />
             <div style={grid_styles}>
