@@ -120,8 +120,8 @@ const DCAForm = ({handleFormSubmit}) => {
     }
 
     return (
-        <div style = {{width: '35vw', position: 'relative', marginTop: '25vh', transform: 'translateY(-50%)'}}>
-            <Form onSubmit = {handleSubmit} style = {{display: 'inline-block', marginTop: '25vh', textAlign: 'left', padding: '50px 75px 50px 75px',  borderRadius: 50, background: '#282c34', boxShadow:  '31px 31px 62px #22252c, -31px -31px 62px #2e333c'}}>
+        <div style = {{width: '35vw', height: '40vh', display: 'flex', justifyContent:'center', position: 'relative', marginTop: '19vh'}}>
+            <Form onSubmit = {handleSubmit} style = {{display: 'inline-block', textAlign: 'left', padding: '50px 75px 50px 75px',  borderRadius: 50, background: '#282c34', boxShadow:  '31px 31px 62px #22252c, -31px -31px 62px #2e333c'}}>
                 <FormGroup>
                     <Label style={labelStyle} for="search">Search</Label>
                     <Input style={inputStyle} type="text" name="search" id="search" value ={searchInput} onChange = {handleSearch}>
