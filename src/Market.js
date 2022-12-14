@@ -1,10 +1,11 @@
 import React from 'react';
+import Navbar from './components/navbar';
 
 
 const Market = () => {
     return (
-        <div>
-            <h1>Market</h1>
+        <div style = {{background: '#282c34', height: '100vh'}}>
+            <Navbar />
         </div>
     );
 }

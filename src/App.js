@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Home from './Home';
 import DCA from './DCA';
 import Portfolio from './Portfolio';
@@ -7,7 +7,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
 
+
 function App() {
+
+  useEffect(() => {
+    document.title = "Crypto Calculator";
+  }, []);
+
   return (
     
     <Router>
