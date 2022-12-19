@@ -87,7 +87,7 @@ const DCAChart = (props) => {
     }, [props.data]);
 
     return (
-        <div style = {{width: '35vw', position: 'relative', marginTop: '19vh'}}> 
+        <div style = {{width: '35vw', position: 'relative', marginTop: '10vh', marginRight: '2vw'}}> 
             <LineChart
             width={700}
             height={400}

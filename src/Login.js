@@ -9,7 +9,6 @@ const Login = () => {
         <div style = {{background: '#282c34', height: '100vh'}}>
             <Navbar />
             <LoginForm />
-            <SignUpForm />
         </div>
     );
 }
