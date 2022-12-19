@@ -31,6 +31,7 @@ const Navbar = () => {
                 <Link to="/dca" style={styles.link}>Dollar Cost Average</Link>
                 <Link to="/portfolio" style={styles.link}>Portfolio</Link>
                 <Link to="/market" style={styles.link}>Market</Link>
+                <Link to="/login" style={styles.link}>Login</Link>
 
             </nav>
             <hr></hr>
