@@ -4,6 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 import json
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 
 # Create your views here.
 @csrf_exempt
@@ -20,6 +23,7 @@ def login_view(request):
             return JsonResponse({'message': 'Invalid credentials'})
     else:
         return JsonResponse({'message': 'Invalid request method'})
+    
 
 @csrf_exempt
 def register_view(request):
@@ -37,3 +41,11 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return JsonResponse({'message': 'User logged out successfully'})
+
+class UserInfoView(APIView):
+    def get(self, request):
+        user = request.user
+        if user.is_authenticated:
+            return Response({'username': user.username, 'email': user.email})
+        else:
+            return Response({'message': 'User not logged in'})

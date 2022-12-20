@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './components/navbar';
 import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
 const Login = () => {

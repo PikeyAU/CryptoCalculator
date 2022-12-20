@@ -1,8 +1,11 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
 const Navbar = () => {
+
+    const [username, setUsername] = useState('');
 
     const styles = {
         nav: {
@@ -23,6 +26,18 @@ const Navbar = () => {
         }
     };
 
+    useEffect (() => {
+        axios.get('http://localhost:8000/api/get/user/info')
+        .then(res => {
+            console.log(res.data);
+            setUsername(res.data.username);
+            console.log(username)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }, [username]);
+
     return (
         <div>
             <nav style={styles.nav}>
@@ -31,7 +46,7 @@ const Navbar = () => {
                 <Link to="/dca" style={styles.link}>Dollar Cost Average</Link>
                 <Link to="/portfolio" style={styles.link}>Portfolio</Link>
                 <Link to="/market" style={styles.link}>Market</Link>
-                <Link to="/login" style={styles.link}>Login</Link>
+                {username ? <Link to="/login" style={styles.link}>{username}</Link> : <Link to="/login" style={styles.link}>Login</Link>}
 
             </nav>
             <hr></hr>

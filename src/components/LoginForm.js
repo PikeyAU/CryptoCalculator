@@ -59,9 +59,11 @@ const linkStyles = {
 function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
+    const [error, setError] = useState('');
     const [isHover, setIsHover] = useState(false);
     const [linkHover, setLinkHover] = useState(false);
+
+   
 
     const submitStyles = {
         display: 'inline-block',
@@ -102,8 +104,8 @@ function LoginForm() {
             })
             .catch(error => {
                 console.log(error);
-                setError('Invalid username or password');
-        });
+            })
+       
     };
 
     const handleMouseEnter = () => {
@@ -126,19 +128,24 @@ function LoginForm() {
     return (
         <div style = {loginFormStyles}>
             <form onSubmit={handleSubmit} style = {{display: 'inline-block', textAlign: 'left', padding: '50px 75px 50px 75px',  borderRadius: 50, background: '#282c34', boxShadow:  '31px 31px 62px #22252c, -31px -31px 62px #2e333c'}}>
-                <label style = {labelStyles} for="username">Username:</label>
+                <label style = {labelStyles} htmlFor="username">Username:</label>
                 <input style = {inputStyles} type="text" name="text" id="text" value={username} onChange={e => setUsername(e.target.value)} />
                 <br/>
-                <label style = {labelStyles} for="password">Password:</label>
+                <label style = {labelStyles} htmlFor="password">Password:</label>
                 <input style = {inputStyles} type="password" name="password" id="password" value={password} onChange={e => setPassword(e.target.value)} />
                 <br/>
                 <br/>
             
-                <p style={linkStyles}>Don't have an account? <Link style = {Object.assign({}, linkStyles, linkAdditionalStyles)} onMouseEnter = {handleLinkEnter} onMouseLeave = {handleLinkLeave}  to="/register">Click Here to Sign Up!</Link></p>
+                <p style={linkStyles}>Don't have an account?</p>
+                <br/>
+                <Link style = {Object.assign({}, linkStyles, linkAdditionalStyles)} onMouseEnter = {handleLinkEnter} onMouseLeave = {handleLinkLeave}  to="/register">Click Here to Sign Up!</Link>
                 <br/>
                 <br/>
                 <div style={buttonWrapperStyles}>
                     <button style = {submitStyles} onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMouseLeave} type="submit">Login</button>
+                </div>
+                <div>
+                    {error ? <p style = {{color: 'red', fontSize: '18px', fontFamily: 'Eras Light ITC', letterSpacing: '2px', textAlign: 'center'}}>{error}</p> : null}
                 </div>
             </form>
         </div>
