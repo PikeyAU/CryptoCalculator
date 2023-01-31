@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { CiSquarePlus } from 'react-icons/ci';
 
-const PortfolioCard = (props) => {
+const AddPortfolioCard = (props) => {
+    const [hover, setHover] = useState(false);
+
+    const handleMouseEnter = () => {
+        setHover(true);
+    }
+
+    const handleMouseLeave = () => {
+        setHover(false);
+    }
 
     
     const styles = {
@@ -28,10 +37,10 @@ const PortfolioCard = (props) => {
         <div style={styles}>
             
             <div style= {{fontFamily: 'Eras Light ITC', letterSpacing: '1px', margin: 'auto'}}>Add Coin To Portfolio</div>
-            <div style={{marginLeft: 'auto', fontSize: '50px', marginRight: 'auto', color: 'greenyellow'}}><CiSquarePlus/></div>
+            <div style={{marginLeft: 'auto', fontSize: '50px', marginRight: 'auto', color: hover ? 'greenyellow' : 'white'}} onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMouseLeave} ><CiSquarePlus/></div>
             
         </div>
     );
 }
 
-export default PortfolioCard;
+export default AddPortfolioCard;
