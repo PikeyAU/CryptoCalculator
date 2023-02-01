@@ -95,17 +95,19 @@ function LoginForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8000/api/login/', {
+        const user = {
             username: username,
             password: password
-            })
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-       
+        };
+        const {data} = axios.post('http://localhost:8000/api/token/', user, {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
+
+        .then(res => {
+            localStorage.clear();
+            localStorage.setItem('access_token', res.data.access);
+            localStorage.setItem('refresh_token', res.data.refresh);
+            window.location = '/';
+        })
+         
     };
 
     const handleMouseEnter = () => {

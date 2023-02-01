@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
 
     const [username, setUsername] = useState('');
+    const [isAuth, setIsAuth] = useState(false);
 
     const styles = {
         nav: {
@@ -27,16 +28,11 @@ const Navbar = () => {
     };
 
     useEffect (() => {
-        axios.get('http://localhost:8000/api/get/user/info')
-        .then(res => {
-            console.log(res.data);
-            setUsername(res.data.username);
-            console.log(username)
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }, [username]);
+        if (localStorage.getItem('access_token') !== null) {
+            setIsAuth(true);
+        }
+    }
+    ,[isAuth]);
 
     return (
         <div>
@@ -46,7 +42,7 @@ const Navbar = () => {
                 <Link to="/dca" style={styles.link}>Dollar Cost Average</Link>
                 <Link to="/portfolio" style={styles.link}>Portfolio</Link>
                 <Link to="/market" style={styles.link}>Market</Link>
-                {username ? <Link to="/login" style={styles.link}>{username}</Link> : <Link to="/login" style={styles.link}>Login</Link>}
+                {isAuth ? <Link to="/logout" style={styles.link}>Logout</Link> : <Link to="/login" style={styles.link}>Login</Link>}
 
             </nav>
             <hr></hr>

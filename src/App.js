@@ -4,6 +4,7 @@ import DCA from './DCA';
 import Portfolio from './Portfolio';
 import Market from './Market';
 import Login from './Login';
+import Logout from './Logout';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
@@ -24,6 +25,7 @@ function App() {
         <Route path = "/portfolio" element = {<Portfolio />} />
         <Route path = "/market" element = {<Market />} />
         <Route path = "/login" element = {<Login />} />
+        <Route path = "/logout" element = {<Logout />} />
       </Routes>
     </Router>
   
