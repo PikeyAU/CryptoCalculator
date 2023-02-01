@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(null);
     const [isAuth, setIsAuth] = useState(false);
 
     const styles = {
@@ -28,11 +28,26 @@ const Navbar = () => {
     };
 
     useEffect (() => {
+
+        const fetchUser = async () => {
+            try {
+                
+                const {data} = await axios.get('http://localhost:8000/api/get/user/info', {headers: {'Content-Type': 'application/json'}}, {withCredentials: true});
+                setUsername(data.username);
+            } catch (error) {
+                console.log(error);
+            }
+            
+        }
+
         if (localStorage.getItem('access_token') !== null) {
             setIsAuth(true);
+            fetchUser();
         }
-    }
-    ,[isAuth]);
+    }, []);
+
+    
+
 
     return (
         <div>
@@ -42,7 +57,7 @@ const Navbar = () => {
                 <Link to="/dca" style={styles.link}>Dollar Cost Average</Link>
                 <Link to="/portfolio" style={styles.link}>Portfolio</Link>
                 <Link to="/market" style={styles.link}>Market</Link>
-                {isAuth ? <Link to="/logout" style={styles.link}>Logout</Link> : <Link to="/login" style={styles.link}>Login</Link>}
+                {isAuth ? <Link to="/logout" style={styles.link}>{username}</Link> : <Link to="/login" style={styles.link}>Login</Link>}
 
             </nav>
             <hr></hr>
