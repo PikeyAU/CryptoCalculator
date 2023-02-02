@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from backend.views import LogoutView, GetUserInfo, UserRegister, AddCoinPortfolio, CreatePortfolio, GetUserPortfolio, CheckIfPortfolioExists
+from backend.views import LogoutView, GetUserInfo, UserRegister, AddCoinPortfolio, CreatePortfolio, GetUserPortfolio, CheckIfPortfolioExists, GetPortfolioHolding
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -15,7 +15,8 @@ urlpatterns = [
     path('user/add/coin/', AddCoinPortfolio.as_view(), name='add_coin'),
     path('user/create/portfolio/', CreatePortfolio.as_view(), name='create_portfolio'),
     path('user/get/portfolio/', GetUserPortfolio.as_view(), name='get_portfolio'),
-    path('user/check/portfolio/', CheckIfPortfolioExists.as_view(), name='check_portfolio')
+    path('user/check/portfolio/', CheckIfPortfolioExists.as_view(), name='check_portfolio'),
+    path('user/get/holdings/', GetPortfolioHolding.as_view(), name='get_holdings' )
     
 ]
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const CoinPortfolioCard = () => {
+const CoinPortfolioCard = (props) => {
     const [data, setData] = useState([{}]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -27,7 +27,7 @@ const CoinPortfolioCard = () => {
 
     useEffect(() => {
 
-        const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`
+        const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${props.coin}&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`
 
         const fetchData = async () => {
             try {
@@ -35,6 +35,7 @@ const CoinPortfolioCard = () => {
                 if (response.ok) {
                     const json = await response.json();
                     setData(json);
+                    console.log(json)
                 } else {
                     throw response;
                 }
@@ -43,7 +44,7 @@ const CoinPortfolioCard = () => {
                 setError(true);
             } finally {
                 setLoading(false);
-                console.log(data)
+    
             }
         };
         fetchData();
@@ -74,7 +75,7 @@ const CoinPortfolioCard = () => {
                 </div>
                 
                 <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginRight: 'auto'}}>
-                    1.52 | ${data[0].current_price.toFixed() * 1.52}
+                    {props.amount} | ${(data[0].current_price * props.amount).toFixed(2)}
                 </div>
             
                 <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginLeft: 'auto', marginRight: '10px', color: data[0].price_change_percentage_24h > 0 ? 'green' : 'red' }}>

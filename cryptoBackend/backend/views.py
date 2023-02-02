@@ -79,3 +79,20 @@ class CheckIfPortfolioExists(APIView):
                return Response("Portfolio Exists")
           except:
                return Response("Portfolio Does Not Exist")
+
+class GetPortfolioHolding(APIView):
+     permission_classes = (IsAuthenticated,)
+     def get(self, request):
+          user = request.user
+          portfolio = UserPortfolio.objects.get(user=user)
+          holdings = Holding.objects.filter(user_portfolio=portfolio)
+          data = []
+          for holding in holdings:
+               data.append({
+                    "id": holding.id,
+                    "coin_name": holding.coin_name,
+                    "coin_quantity": holding.coin_quantity,
+                    "coin_buy_price": holding.coin_buy_price,
+                    "coin_buy_date": holding.coin_buy_date,
+               })
+          return Response(data)

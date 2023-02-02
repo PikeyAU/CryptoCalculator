@@ -167,6 +167,7 @@ const AddCoinForm = (props) => {
         .then((response) => {
             if (response.data === "Coin Added to Portfolio") {
                 console.log('Coin added');
+                props.handleCallBack(response.data)
             }
         })
         .catch((error) => {
