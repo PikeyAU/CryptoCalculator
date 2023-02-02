@@ -3,5 +3,5 @@ from .models import UserPortfolio, Holding
 
 
 # Register your models here.
-admin.register(UserPortfolio)
-admin.register(Holding)
+admin.site.register(UserPortfolio)
+admin.site.register(Holding)

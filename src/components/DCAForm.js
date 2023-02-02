@@ -76,6 +76,7 @@ const DCAForm = ({handleFormSubmit}) => {
         }
 
             handleFormSubmit(data);
+            console.log(data)
         }
     
     const handleMouseEnter = () => {

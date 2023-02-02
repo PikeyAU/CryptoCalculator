@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
+from .models import UserPortfolio, Holding
 
 class LogoutView(APIView):
      permission_classes = (IsAuthenticated,)
@@ -40,3 +41,41 @@ class UserRegister(APIView):
                password=request.data["password"],   
           )
           return Response(status=status.HTTP_201_CREATED)
+
+
+class AddCoinPortfolio(APIView):
+     permission_classes = (IsAuthenticated,)
+     def post(self, request):
+          portfolio = UserPortfolio.objects.get(user=request.user)
+          coin = request.data["coin"]
+          amount = request.data["amount"]
+          buyprice = request.data["buyprice"]
+          buydate = request.data["buydate"]
+
+          Holding.objects.create(user_portfolio = portfolio, coin_name=coin, coin_quantity = amount, coin_buy_price = buyprice, coin_buy_date = buydate)
+          return Response("Coin Added to Portfolio")
+
+
+class CreatePortfolio(APIView):
+     permission_classes = (IsAuthenticated,)
+     def post(self, request):
+          user = request.user
+          UserPortfolio.objects.create(user=user)
+          return Response("Success")
+     
+class GetUserPortfolio(APIView):
+     permission_classes = (IsAuthenticated,)
+     def get(self, request):
+          user = request.user
+          data = UserPortfolio.objects.get(user=user).created_at
+          return Response(data)
+
+class CheckIfPortfolioExists(APIView):
+     permission_classes = (IsAuthenticated,)
+     def get(self, request):
+          user = request.user
+          try:
+               UserPortfolio.objects.get(user=user)
+               return Response("Portfolio Exists")
+          except:
+               return Response("Portfolio Does Not Exist")
