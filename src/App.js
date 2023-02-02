@@ -5,6 +5,7 @@ import Portfolio from './Portfolio';
 import Market from './Market';
 import Login from './Login';
 import Logout from './Logout';
+import Register from './Register';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
@@ -26,6 +27,7 @@ function App() {
         <Route path = "/market" element = {<Market />} />
         <Route path = "/login" element = {<Login />} />
         <Route path = "/logout" element = {<Logout />} />
+        <Route path = "/register" element = {<Register />} />
       </Routes>
     </Router>
   
