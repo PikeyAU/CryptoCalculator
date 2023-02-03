@@ -11,6 +11,8 @@ const Portfolio = () => {
     const [userCoinDataLoaded, setUserCoinDataLoaded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [triggerMessage, setTriggerMessage] = useState(false);
+    const [portfolio, setPortfolio] = useState(false);
 
 
     const fetchUserCoinData = async () => {
@@ -23,17 +25,66 @@ const Portfolio = () => {
         setLoading(false);
     }
 
+    async function createPortfolio() {
+        await axios.post('http://localhost:8000/api/user/create/portfolio/', {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
+        .then((response) => {
+            if (response.data === "Success") {
+                console.log('Portfolio created');
+                setPortfolio(true);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            setPortfolio(false);
+        })
+    }
+
+    async function checkPortfolio() {
+
+        try {
+            const response = await axios.get('http://localhost:8000/api/user/check/portfolio/', {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
+            
+            if (response.data === "Portfolio Does Not Exist") {
+                setPortfolio(false);
+            } else {
+                setPortfolio(true);
+                console.log('Portfolio Exists');
+
+            }
+        } catch (error) {
+            
+                console.error('Error fetching data: ', error);
+                console.log(error);
+        
+        }
+    }
+    
+
+
+
+    const handleDataFromChild = (data) => {
+        if (data === "Coin Added to Portfolio") {
+            setTriggerMessage(true);
+        }
+    }
+
 
     useEffect(() => {
-        fetchUserCoinData();
-    }, []);
+        checkPortfolio();
+        if (portfolio === false) {
+            createPortfolio();
+            fetchUserCoinData();
+        } else {
+            fetchUserCoinData();
+        }
+    }, [triggerMessage, portfolio]);
 
 
 
     return (
         <div style = {{background: '#282c34', height: '100vh'}}>
             <Navbar />
-            <AddPortfolioCard />
+            <AddPortfolioCard onDataFromChild = {handleDataFromChild}/>
             {userCoinDataLoaded ? userCoinData.map((coin) => {
                 console.log(coin)
                 return (
