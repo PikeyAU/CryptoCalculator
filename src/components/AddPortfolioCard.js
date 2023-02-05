@@ -54,7 +54,7 @@ const AddPortfolioCard = (props) => {
             ? <div style={styles}><AddCoinForm onDataFromChild = {props.onDataFromChild} handleClick = {handleClick}/></div>
 
             :<div style={styles}><div style= {{fontFamily: 'Eras Light ITC', letterSpacing: '1px', margin: 'auto'}}>Add Coin To Portfolio</div>
-                <div style={{marginLeft: 'auto', fontSize: '50px', marginRight: 'auto', color: hover ? 'greenyellow' : 'white', transform: hover ? 'rotate(90deg)' : 'rotate(0deg)', transition: hover ? 'all 0.25s ease-in-out' : 'all 0.25s ease-in-out'}} onClick={handleClick} onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMouseLeave} ><CiSquarePlus/></div></div>
+                <div style={{marginLeft: 'auto', fontSize: '50px', marginRight: 'auto', color: hover ? 'greenyellow' : 'white', transform: hover ? 'rotate(90deg)' : 'rotate(0deg)', transformOrigin: 'center', transition: hover ? 'all 0.25s ease-in-out' : 'all 0.25s ease-in-out'}} onClick={handleClick} onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMouseLeave} ><CiSquarePlus/></div></div>
             
             }
 

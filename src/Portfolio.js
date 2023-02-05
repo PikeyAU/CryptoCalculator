@@ -13,6 +13,7 @@ const Portfolio = () => {
     const [error, setError] = useState(false);
     const [triggerMessage, setTriggerMessage] = useState(false);
     const [portfolio, setPortfolio] = useState(false);
+    const {isAuth , setIsAuth} = useState(false);
 
 
     const fetchUserCoinData = async () => {
@@ -70,14 +71,19 @@ const Portfolio = () => {
 
 
     useEffect(() => {
-        checkPortfolio();
-        if (portfolio === false) {
-            createPortfolio();
-            fetchUserCoinData();
-        } else {
-            fetchUserCoinData();
+
+        if (localStorage.getItem('access_token') !== null) {
+            setIsAuth(true);
+            checkPortfolio();
+            if (portfolio === false) {
+                createPortfolio();
+                fetchUserCoinData();
+            } else {
+                fetchUserCoinData();
+            }
         }
-    }, [triggerMessage, portfolio]);
+        }, [triggerMessage, portfolio]);
+    
 
 
 
@@ -97,7 +103,7 @@ const Portfolio = () => {
                     />
                 )
             }
-            ) : <div>Loading...</div>}
+            ) : <div></div>}
 
         </div>
     );
