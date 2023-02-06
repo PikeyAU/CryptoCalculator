@@ -4,6 +4,7 @@ import AddPortfolioCard from './components/AddPortfolioCard';
 import CoinPortfolioCard from './components/CoinPortfolioCard';
 import axios from 'axios';
 import { Puff } from 'react-loading-icons';
+import NoAuthCard from './components/NoAuthCard';
 
 
 const Portfolio = () => {
@@ -13,6 +14,8 @@ const Portfolio = () => {
     const [error, setError] = useState(false);
     const [triggerMessage, setTriggerMessage] = useState(false);
     const [portfolio, setPortfolio] = useState(false);
+    const [isAuth, setIsAuth] = useState(false);
+
 
     const fetchUserCoinData = async () => {
         const result = await checkCreatePortfolio();
@@ -72,7 +75,10 @@ const Portfolio = () => {
 
     useEffect(() => {
 
-    
+            if (localStorage.getItem('access_token')) {
+                setIsAuth(true);
+            }
+
             fetchUserCoinData();
             
     
@@ -82,7 +88,7 @@ const Portfolio = () => {
     return (
         <div style = {{background: '#282c34', height: '100vh'}}>
             <Navbar />
-            <AddPortfolioCard onDataFromChild = {handleDataFromChild}/>
+            {isAuth ? <AddPortfolioCard onDataFromChild = {handleDataFromChild}/> : <NoAuthCard />}
             {userCoinDataLoaded ? userCoinData.map((coin) => {
                 console.log(coin)
                 return (

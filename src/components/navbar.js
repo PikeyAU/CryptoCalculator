@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import UserDropdown from './UserDropdown';
+
 
 
 const Navbar = () => {
@@ -61,7 +63,7 @@ const Navbar = () => {
                 <Link to="/dca" style={styles.link}>Dollar Cost Average</Link>
                 <Link to="/portfolio" style={styles.link}>Portfolio</Link>
                 <Link to="/market" style={styles.link}>Market</Link>
-                {isAuth ? <Link to="/logout" style={styles.link}>Logout {username}</Link> : <Link to="/login" style={styles.link}>Login</Link>}
+                {isAuth ? <div style={styles.link}><UserDropdown name = {username}/></div> : <Link to="/login" style={styles.link}>Login</Link>}
 
             </nav>
             <hr></hr>
