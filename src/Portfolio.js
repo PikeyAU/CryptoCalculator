@@ -3,7 +3,7 @@ import Navbar from './components/navbar';
 import AddPortfolioCard from './components/AddPortfolioCard';
 import CoinPortfolioCard from './components/CoinPortfolioCard';
 import axios from 'axios';
-import { TbIceSkating } from 'react-icons/tb';
+import { Puff } from 'react-loading-icons';
 
 
 const Portfolio = () => {
@@ -95,8 +95,7 @@ const Portfolio = () => {
                     />
                 )
             }
-            ) : <div></div>}
-
+            ) : <div style = {{margin: 'auto'}}></div>}
         </div>
     );
 }
