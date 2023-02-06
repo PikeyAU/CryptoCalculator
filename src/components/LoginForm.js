@@ -93,20 +93,22 @@ function LoginForm() {
 
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const user = {
             username: username,
             password: password
         };
-        const {data} = axios.post('http://localhost:8000/api/token/', user, {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
+        const {data} = await axios.post('http://localhost:8000/api/token/', user,
+        {headers: {'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
 
-        .then(res => {
-            localStorage.clear();
-            localStorage.setItem('access_token', res.data.access);
-            localStorage.setItem('refresh_token', res.data.refresh);
-            window.location = '/';
-        })
+        localStorage.clear();
+        localStorage.setItem('access_token', data.access);
+        localStorage.setItem('refresh_token', data.refresh);
+
+        axios.defaults.headers.common['Authorization'] = `Bearer ${data['access']}`;
+        window.location = '/';
          
     };
 

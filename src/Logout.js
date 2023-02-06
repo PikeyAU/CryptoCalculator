@@ -7,7 +7,10 @@ const Logout = () => {
     useEffect(() => {
         (async () => {
             try {
-                const {data} = await axios.post('http://localhost:8000/api/logout/', {refresh_token: localStorage.getItem('refresh_token')}, {headers: {'Content-Type': 'application/json'}}, {withCredentials: true});
+                const {data} = await axios.post('http://localhost:8000/api/logout/', {refresh_token: localStorage.getItem('refresh_token')}, 
+                {headers: {'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
+                
                 localStorage.clear();
 
                 axios.defaults.headers.common['Authorization'] = null;

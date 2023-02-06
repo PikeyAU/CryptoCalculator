@@ -27,26 +27,30 @@ const Navbar = () => {
         }
     };
 
-    useEffect (() => {
-
-        const fetchUser = async () => {
-            try {
-                
-                const {data} = await axios.get('http://localhost:8000/api/get/user/info', {headers: {'Content-Type': 'application/json'}}, {withCredentials: true});
-                setUsername(data.username);
-            } catch (error) {
-                console.log(error);
-            }
-            
-        }
-
-        if (localStorage.getItem('access_token') !== null) {
+    const getUserInfo = async() => {
+        if (localStorage.getItem('access_token') === null) {
+            setIsAuth(false);
+        } else {
+        try {
+            const {data} = await axios.get('http://localhost:8000/api/get/user/info',
+                {headers: {'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
+            setUsername(data.username);
             setIsAuth(true);
-            fetchUser();
+
+        } catch (error) {
+            console.log(error);
         }
-    }, []);
+    }
+}
+
 
     
+
+    useEffect (() => {
+        getUserInfo(); 
+    }, []);
+
 
 
     return (

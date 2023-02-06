@@ -13,53 +13,53 @@ const Portfolio = () => {
     const [error, setError] = useState(false);
     const [triggerMessage, setTriggerMessage] = useState(false);
     const [portfolio, setPortfolio] = useState(false);
-    const {isAuth , setIsAuth} = useState(false);
-
 
     const fetchUserCoinData = async () => {
-        const url = 'http://localhost:8000/api/user/get/holdings/';
+        const result = await checkCreatePortfolio();
 
-        const response = await axios.get(url, {headers: {'Content-Type': 'application/json'}}, {withCredentials: true});
-        const data = response.data;
-        setUserCoinData(data);
-        setUserCoinDataLoaded(true);
-        setLoading(false);
-    }
-
-    async function createPortfolio() {
-        await axios.post('http://localhost:8000/api/user/create/portfolio/', {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
-        .then((response) => {
-            if (response.data === "Success") {
-                console.log('Portfolio created');
-                setPortfolio(true);
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-            setPortfolio(false);
-        })
-    }
-
-    async function checkPortfolio() {
-
-        try {
-            const response = await axios.get('http://localhost:8000/api/user/check/portfolio/', {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
+        if (result === "Portfolio Exists") {
             
-            if (response.data === "Portfolio Does Not Exist") {
-                setPortfolio(false);
-            } else {
+            const url = 'http://localhost:8000/api/user/get/holdings/';
+
+            const response = await axios.get(url,
+                {headers: {'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
+                
+
+            const data = response.data;
+            setUserCoinData(data);
+            setUserCoinDataLoaded(true);
+            setLoading(false);
+
+        }
+        
+
+    }
+
+    async function checkCreatePortfolio() {
+        try {
+            const response = await axios.get('http://localhost:8000/api/user/check/portfolio/',
+                                    {headers: {'Content-Type': 'application/json',
+                                                'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
+            
+            if (response.data === "Portfolio Exists") {
                 setPortfolio(true);
                 console.log('Portfolio Exists');
-
+                return ('Portfolio Exists')
+            } else {
+                const createResponse = await axios.post('http://localhost:8000/api/user/create/portfolio/',
+                                    {headers: {'Content-Type': 'application/json',
+                                                'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
+                if (createResponse.data === "Success") {
+                    setPortfolio(true);
+                    console.log('Portfolio Created');
+                }
             }
-        } catch (error) {
-            
-                console.error('Error fetching data: ', error);
-                console.log(error);
-        
+        }
+        catch (error) {
+            console.log(error);
         }
     }
-    
 
 
 
@@ -67,25 +67,17 @@ const Portfolio = () => {
         if (data === "Coin Added to Portfolio") {
             setTriggerMessage(true);
         }
-    }
+    }  
 
 
     useEffect(() => {
 
-        if (localStorage.getItem('access_token') !== null) {
-            setIsAuth(true);
-            checkPortfolio();
-            if (portfolio === false) {
-                createPortfolio();
-                fetchUserCoinData();
-            } else {
-                fetchUserCoinData();
-            }
-        }
-        }, [triggerMessage, portfolio]);
     
-
-
+            fetchUserCoinData();
+            
+    
+        }, [triggerMessage]);
+    
 
     return (
         <div style = {{background: '#282c34', height: '100vh'}}>

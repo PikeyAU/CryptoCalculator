@@ -117,7 +117,8 @@ function RegisterForm() {
                 username: username,
                 password: password
             };
-            const {data} = axios.post('http://localhost:8000/api/token/', user, {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
+            const {data} = axios.post('http://localhost:8000/api/token/', user,
+            {headers: {'Content-Type': 'application/json'}, withCredentials: true})
     
             .then(res => {
                 localStorage.clear();

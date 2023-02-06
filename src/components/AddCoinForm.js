@@ -141,29 +141,11 @@ const AddCoinForm = (props) => {
         setIsHover2(false);
     }
 
-    async function checkPortfolio() {
-
-        try {
-            const response = await axios.get('http://localhost:8000/api/user/check/portfolio/', {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
-            
-            if (response.data === "Portfolio Does Not Exist") {
-                setPortfolio(false);
-            } else {
-                setPortfolio(true);
-                console.log('Portfolio Exists');
-
-            }
-        } catch (error) {
-            
-                console.error('Error fetching data: ', error);
-                console.log(error);
-        
-    }
-}
-        
-
+    
     async function addCoin(data)  {
-       await axios.post('http://localhost:8000/api/user/add/coin/', data, {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
+       await axios.post('http://localhost:8000/api/user/add/coin/', data,
+       {headers: {'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
         .then((response) => {
             if (response.data === "Coin Added to Portfolio") {
                 console.log('Coin added');
@@ -175,20 +157,7 @@ const AddCoinForm = (props) => {
         })
     }
 
-    async function createPortfolio() {
-        await axios.post('http://localhost:8000/api/user/create/portfolio/', {headers: {'Content-Type': 'application/json'}}, {withCredentials: true})
-        .then((response) => {
-            if (response.data === "Success") {
-                console.log('Portfolio created');
-                setPortfolio(true);
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-            setPortfolio(false);
-        })
-    }
-
+    
     function handleSubmit(e) {
         e.preventDefault();
         const data = {
@@ -199,24 +168,12 @@ const AddCoinForm = (props) => {
         }
         console.log(data);
 
-        checkPortfolio();
-
-        if (portfolio === false) {
-            createPortfolio();
-            addCoin(data);
-        } else {
-            addCoin(data);
-        }
-
-
         
-
-
+        
+        addCoin(data);
+        
            
 }
-
-
-
 
     return (
         <div>
