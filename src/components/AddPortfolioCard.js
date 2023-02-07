@@ -24,7 +24,7 @@ const AddPortfolioCard = (props) => {
         color: 'white',
         border: 'solid white 1px',
         height: clicked ? '32vh' : '10vh',
-        width: '20vw',
+        width: '25vw',
         margin: 'auto',
         marginTop: '4vh',
         //rounded corners

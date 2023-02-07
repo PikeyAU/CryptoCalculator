@@ -30,7 +30,22 @@ const Portfolio = () => {
                 
 
             const data = response.data;
-            setUserCoinData(data);
+
+            const coinData = [];
+
+            //check if coin exists in coinData array, if exists, add to quantity, if not, add to array
+            data.forEach((coin) => {
+                coin.transaction_count = 1;
+                const coinExists = coinData.find((coinData) => coinData.coin_name === coin.coin_name);
+                if (coinExists) {
+                    coinExists.coin_quantity += coin.coin_quantity;
+                    coinExists.transaction_count += 1;
+                } else {
+                    coinData.push(coin);
+                }
+            })
+
+            setUserCoinData(coinData);
             setUserCoinDataLoaded(true);
             setLoading(false);
 
@@ -38,6 +53,7 @@ const Portfolio = () => {
         
 
     }
+
 
     async function checkCreatePortfolio() {
         try {
@@ -70,7 +86,7 @@ const Portfolio = () => {
         if (data === "Coin Added to Portfolio") {
             setTriggerMessage(true);
         }
-    }  
+    } 
 
 
     useEffect(() => {
@@ -90,7 +106,6 @@ const Portfolio = () => {
             <Navbar />
             {isAuth ? <AddPortfolioCard onDataFromChild = {handleDataFromChild}/> : <NoAuthCard />}
             {userCoinDataLoaded ? userCoinData.map((coin) => {
-                console.log(coin)
                 return (
                     <CoinPortfolioCard 
                         key = {coin.id}
@@ -98,6 +113,7 @@ const Portfolio = () => {
                         amount = {coin.coin_quantity}
                         buyprice = {coin.coin_buy_price}
                         buydate = {coin.coin_buy_date}
+                        transaction_count = {coin.transaction_count}
                     />
                 )
             }

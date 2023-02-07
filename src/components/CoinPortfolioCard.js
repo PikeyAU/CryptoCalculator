@@ -15,7 +15,7 @@ const CoinPortfolioCard = (props) => {
         color: 'white',
         border: 'solid white 1px',
         height: '10vh',
-        width: '20vw',
+        width: '25vw',
         margin: 'auto',
         marginTop: '4vh',
         //rounded corners
@@ -78,8 +78,10 @@ const CoinPortfolioCard = (props) => {
                     {props.amount} | ${(data[0].current_price * props.amount).toFixed(2)}
                 </div>
             
-                <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginLeft: 'auto', marginRight: '10px', color: data[0].price_change_percentage_24h > 0 ? 'green' : 'red' }}>
-                    {data[0].price_change_percentage_24h.toFixed(2)}%
+                <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginLeft: 'auto', marginRight: '10px', color: props.buyprice < data[0].current_price ? 'green' : 'red' }}>
+                    {/*Percentage difference between buyprice and current price*/}
+                    {((data[0].current_price - props.buyprice) / props.buyprice * 100).toFixed(2)}% | ${(data[0].current_price * props.amount - props.buyprice).toFixed(2)}
+                    
                 </div>
                 
             </div>

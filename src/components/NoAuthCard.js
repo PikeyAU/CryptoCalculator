@@ -12,7 +12,7 @@ const NoAuthCard = (props) => {
         justifyContent: 'left',
         color: 'white',
         border: 'solid white 1px',
-        width: '20vw',
+        width: '25vw',
         margin: 'auto',
         height: '10vh',
         marginTop: '4vh',
