@@ -41,7 +41,8 @@ const NavBanner = () => {
                 {data.map(coin => (
                     <div key={coin.id} style= {{height: 40, marginTop: 10}}>
                         
-                        <img src={coin.image} alt={coin.name} height="40px" />
+
+                        <a href = {'https://www.coingecko.com/en/coins/' + coin.id} target="_blank"> <img src={coin.image} alt={coin.name} height="40px" /></a>
                         <p>{coin.price_change_percentage_24h > 0 ? <span style={{color: 'green', lineHeight: 0, verticalAlign: 'midlle'}}>{coin.price_change_percentage_24h.toFixed(2)}% <TbArrowBigUpLines /></span> : <span style={{color: 'red',lineHeight: 0, verticalAlign: 'midlle'}}>{coin.price_change_percentage_24h.toFixed(2)}% <TbArrowBigDownLines/></span> }</p>
 
                     </div>

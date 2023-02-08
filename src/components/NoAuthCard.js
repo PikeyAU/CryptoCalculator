@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 
 
 const NoAuthCard = (props) => {
-    
+    const [hover, setHover] = useState(false);
+
     const styles = {
 
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'left',
-        color: 'white',
         border: 'solid white 1px',
         width: '25vw',
         margin: 'auto',
@@ -30,7 +30,7 @@ const NoAuthCard = (props) => {
     return (
         <div style={styles}>
     
-           <Link to = '/login' style= {{fontFamily: 'Eras Light ITC', letterSpacing: '1px', margin: 'auto', textDecoration: 'none', color: 'white'}}>Login To Build A Portfolio</Link>
+           <Link to = '/login' style= {{fontFamily: 'Eras Light ITC', letterSpacing: '1px', margin: 'auto', textDecoration: 'none', color: hover ? '#DB7D13' : 'white'}}>Login To Build A Portfolio</Link>
     
         </div>
     )
