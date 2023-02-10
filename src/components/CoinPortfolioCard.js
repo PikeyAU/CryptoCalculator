@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import CoinCardExpand from './CoinCardExpand';
 
 const CoinPortfolioCard = (props) => {
     const [data, setData] = useState([{}]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [clicked , setClicked] = useState(false);
+
 
     function transactionQuantity() {
         let quantity = 0;
@@ -42,8 +45,6 @@ const CoinPortfolioCard = (props) => {
     function transactionProfitLossPercentage() {
         let profitLoss = transactionProfitLoss();
         let totalInvestment = calcTotalInvestment();
-        console.log(profitLoss)
-        console.log(totalInvestment)
         return (profitLoss / totalInvestment) * 100;
         
 
@@ -54,12 +55,12 @@ const CoinPortfolioCard = (props) => {
 
         display: 'grid',
         gridTemplateColumns: '0.5fr 1fr 1fr',
-        gridTemplateRows: '1fr 1fr',
+        gridTemplateRows: clicked ? 'auto auto' : 'auto',
         alignItems: 'center',
         justifyContent: 'left',
         color: 'white',
         border: 'solid white 1px',
-        height: '10vh',
+        height: clicked ? 'auto' : '10vh',
         width: '25vw',
         margin: 'auto',
         marginTop: '4vh',
@@ -68,6 +69,7 @@ const CoinPortfolioCard = (props) => {
         //box shadow when hovering black and white
         backgroundColor:'#282C34',
         transition: 'all 0.3s ease-in-out',
+        overflow: 'hidden',
     }
 
     useEffect(() => {
@@ -80,7 +82,6 @@ const CoinPortfolioCard = (props) => {
                 if (response.ok) {
                     const json = await response.json();
                     setData(json);
-                    console.log(json)
                 } else {
                     throw response;
                 }
@@ -96,7 +97,6 @@ const CoinPortfolioCard = (props) => {
 
     }, []);
 
-
         
     if (loading) {
         return <div>Loading...</div>
@@ -105,31 +105,41 @@ const CoinPortfolioCard = (props) => {
     } else {
 
         return (
-            <div style={cardStyles}>
-            
-                <div style={{gridRowStart: '1', gridRowEnd: '3', fontSize: '50px', marginLeft: '15px', marginRight: 'auto', color: 'white'}}>
-                    <img src = {data[0].image} alt = "coin icon" style = {{height: '50px', width: '50px'}}/>
-                </div>
+            <div>
+                {clicked ? 
+
+                <CoinCardExpand coin = {props.coin} transactions = {props.transactions} setClicked = {setClicked} clicked = {clicked} profitCalc = {transactionProfitLossPercentage()} />
                 
-                <div style={{gridRowStart: '1', gridRowEnd: '1', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginRight: 'auto'}}>
-                    {data[0].symbol.toUpperCase()} | {data[0].name}
-                </div>
-            
-                <div style={{gridRowStart: '2', gridRowEnd: '1', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginLeft: 'auto', marginRight: '10px'}}>
-                    ${data[0].current_price}
-                </div>
+                :
+
+                <div style={cardStyles} onClick = {() => setClicked(!clicked)}>
                 
-                <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginRight: 'auto'}}>
-                    {transactionQuantity()} | ${(data[0].current_price * transactionQuantity()).toFixed(2)}
-                </div>
-            
-                <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginLeft: 'auto', marginRight: '10px', color: transactionProfitLoss() > 0 ? 'green' : 'red' }}>
-                    {/*Percentage difference between buyprice and current price*/}
-                    {transactionProfitLossPercentage().toFixed(2)}% | ${transactionProfitLoss().toFixed(2)}
+                    <div style={{gridRowStart: '1', gridRowEnd: '3', fontSize: '50px', marginLeft: '15px', marginRight: 'auto', color: 'white'}}>
+                        <img src = {data[0].image} alt = "coin icon" style = {{height: '50px', width: '50px'}}/>
+                    </div>
                     
-                </div>
+                    <div style={{gridRowStart: '1', gridRowEnd: '1', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginRight: 'auto'}}>
+                        {data[0].symbol.toUpperCase()} | {data[0].name}
+                    </div>
                 
-            </div>
+                    <div style={{gridRowStart: '2', gridRowEnd: '1', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginLeft: 'auto', marginRight: '10px'}}>
+                        ${data[0].current_price}
+                    </div>
+                    
+                    <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginRight: 'auto'}}>
+                        {transactionQuantity()} | ${(data[0].current_price * transactionQuantity()).toFixed(2)}
+                    </div>
+                
+                    <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginLeft: 'auto', marginRight: '10px', color: transactionProfitLoss() > 0 ? 'green' : 'red' }}>
+                        {transactionProfitLossPercentage().toFixed(2)}% | ${transactionProfitLoss().toFixed(2)}
+                        
+                    </div>
+                </div>
+                             
+                        
+                }
+            </div>    
+                
         )
     }
 }
