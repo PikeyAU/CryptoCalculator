@@ -6,6 +6,7 @@ const CoinPortfolioCard = (props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [clicked , setClicked] = useState(false);
+    const [isHover, setIsHover] = useState(false);
 
 
     function transactionQuantity() {
@@ -50,6 +51,14 @@ const CoinPortfolioCard = (props) => {
 
     }
 
+    function handleHover() {
+        setIsHover(true)
+    }
+
+    function handleHoverLeave() {
+        setIsHover(false)
+    }
+
         
     const cardStyles = {
 
@@ -59,7 +68,7 @@ const CoinPortfolioCard = (props) => {
         alignItems: 'center',
         justifyContent: 'left',
         color: 'white',
-        border: 'solid white 1px',
+        border: isHover ? 'solid orange 1px' : 'solid white 1px',
         height: clicked ? 'auto' : '10vh',
         width: '25vw',
         margin: 'auto',
@@ -70,6 +79,7 @@ const CoinPortfolioCard = (props) => {
         backgroundColor:'#282C34',
         transition: 'all 0.3s ease-in-out',
         overflow: 'hidden',
+        
     }
 
     useEffect(() => {
@@ -105,14 +115,13 @@ const CoinPortfolioCard = (props) => {
     } else {
 
         return (
-            <div>
+            <div onMouseEnter = {handleHover} onMouseLeave = {handleHoverLeave}>
                 {clicked ? 
-
                 <CoinCardExpand coin = {props.coin} transactions = {props.transactions} setClicked = {setClicked} clicked = {clicked} profitCalc = {transactionProfitLossPercentage()} />
                 
                 :
 
-                <div style={cardStyles} onClick = {() => setClicked(!clicked)}>
+                <div style={cardStyles} onClick = {() => setClicked(!clicked)} >
                 
                     <div style={{gridRowStart: '1', gridRowEnd: '3', fontSize: '50px', marginLeft: '15px', marginRight: 'auto', color: 'white'}}>
                         <img src = {data[0].image} alt = "coin icon" style = {{height: '50px', width: '50px'}}/>
