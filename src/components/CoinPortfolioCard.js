@@ -5,6 +5,51 @@ const CoinPortfolioCard = (props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    function transactionQuantity() {
+        let quantity = 0;
+
+        props.transactions.forEach(transaction => {
+            quantity += transaction.coin_quantity
+        }
+        )
+        return quantity;
+
+    }
+
+    function transactionProfitLoss() {
+        let profitLoss = 0;
+
+        props.transactions.forEach(transaction => {
+            profitLoss += transaction.coin_quantity * (data[0].current_price - transaction.coin_buy_price)
+            
+        }
+        )
+        return (profitLoss);
+
+    }
+
+    function calcTotalInvestment() {
+        let totalInvestment = 0;
+
+        props.transactions.forEach(transaction => {
+            totalInvestment += transaction.coin_quantity * transaction.coin_buy_price
+        }
+        )
+        return totalInvestment;
+
+    }
+
+    function transactionProfitLossPercentage() {
+        let profitLoss = transactionProfitLoss();
+        let totalInvestment = calcTotalInvestment();
+        console.log(profitLoss)
+        console.log(totalInvestment)
+        return (profitLoss / totalInvestment) * 100;
+        
+
+    }
+
+        
     const cardStyles = {
 
         display: 'grid',
@@ -75,12 +120,12 @@ const CoinPortfolioCard = (props) => {
                 </div>
                 
                 <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginRight: 'auto'}}>
-                    {props.amount} | ${(data[0].current_price * props.amount).toFixed(2)}
+                    {transactionQuantity()} | ${(data[0].current_price * transactionQuantity()).toFixed(2)}
                 </div>
             
-                <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginLeft: 'auto', marginRight: '10px', color: props.buyprice < data[0].current_price ? 'green' : 'red' }}>
+                <div style={{gridRowStart: '2', fontFamily: 'Eras Light ITC', letterSpacing: '1px', marginLeft: 'auto', marginRight: '10px', color: transactionProfitLoss() > 0 ? 'green' : 'red' }}>
                     {/*Percentage difference between buyprice and current price*/}
-                    {((data[0].current_price - props.buyprice) / props.buyprice * 100).toFixed(2)}% | ${(data[0].current_price * props.amount - props.buyprice).toFixed(2)}
+                    {transactionProfitLossPercentage().toFixed(2)}% | ${transactionProfitLoss().toFixed(2)}
                     
                 </div>
                 

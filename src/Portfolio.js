@@ -31,28 +31,38 @@ const Portfolio = () => {
 
             const data = response.data;
 
-            const coinData = [];
+            const compiledTransactions = compileTransactions(data);
 
-            //check if coin exists in coinData array, if exists, add to quantity, if not, add to array
-            data.forEach((coin) => {
-                coin.transaction_count = 1;
-                const coinExists = coinData.find((coinData) => coinData.coin_name === coin.coin_name);
-                if (coinExists) {
-                    coinExists.coin_quantity += coin.coin_quantity;
-                    coinExists.transaction_count += 1;
-                } else {
-                    coinData.push(coin);
-                }
-            })
-
-            setUserCoinData(coinData);
+            setUserCoinData(compiledTransactions);
             setUserCoinDataLoaded(true);
             setLoading(false);
+            console.log(compiledTransactions)
 
         }
         
 
     }
+
+    const compileTransactions = transactions => {
+        const compiledTransactions = {};
+      
+        transactions.forEach(transaction => {
+          const { coin_name, coin_quantity, coin_buy_price, coin_buy_date, id } = transaction;
+          if (!compiledTransactions[coin_name]) {
+            compiledTransactions[coin_name] = [];
+          }
+          compiledTransactions[coin_name].push({
+            id,
+            coin_name,
+            coin_quantity,
+            coin_buy_price,
+            coin_buy_date
+          });
+        });
+      
+        return compiledTransactions;
+        
+      };
 
 
     async function checkCreatePortfolio() {
@@ -105,19 +115,17 @@ const Portfolio = () => {
         <div style = {{background: '#282c34', height: '100vh'}}>
             <Navbar />
             {isAuth ? <AddPortfolioCard onDataFromChild = {handleDataFromChild}/> : <NoAuthCard />}
-            {userCoinDataLoaded ? userCoinData.map((coin) => {
+            {userCoinDataLoaded ? Object.keys(userCoinData).map((coin) => {
+                console.log(userCoinData[coin])
                 return (
                     <CoinPortfolioCard 
-                        key = {coin.id}
-                        coin = {coin.coin_name}
-                        amount = {coin.coin_quantity}
-                        buyprice = {coin.coin_buy_price}
-                        buydate = {coin.coin_buy_date}
-                        transaction_count = {coin.transaction_count}
+                        key = {coin}
+                        coin = {coin}
+                        transactions = {userCoinData[coin]}
                     />
                 )
             }
-            ) : <div style = {{margin: 'auto'}}></div>}
+        ) : <div style = {{margin: 'auto'}}></div>}
         </div>
     );
 }
