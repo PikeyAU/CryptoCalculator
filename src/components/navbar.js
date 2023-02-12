@@ -62,7 +62,7 @@ const Navbar = () => {
                 <Link to="/" style={styles.link}>Home</Link>
                 <Link to="/dca" style={styles.link}>Dollar Cost Average</Link>
                 <Link to="/portfolio" style={styles.link}>Portfolio</Link>
-                <Link to="/market" style={styles.link}>Market</Link>
+                <Link to="/market" style={styles.link}>News</Link>
                 {isAuth ? <div style={styles.link}><UserDropdown name = {username}/></div> : <Link to="/login" style={styles.link}>Login</Link>}
 
             </nav>
