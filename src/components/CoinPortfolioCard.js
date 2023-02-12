@@ -68,8 +68,11 @@ const CoinPortfolioCard = (props) => {
         alignItems: 'center',
         justifyContent: 'left',
         color: 'white',
-        border: isHover ? 'solid orange 1px' : 'solid white 1px',
+        border: isHover ? 'solid #DB7D13 1px' : 'solid white 1px',
         height: clicked ? 'auto' : '10vh',
+        //glow effect on hover
+        boxShadow: isHover ? '0 0 10px #DB7D13' : 'none',
+        
         width: '25vw',
         margin: 'auto',
         marginTop: '4vh',
@@ -79,6 +82,7 @@ const CoinPortfolioCard = (props) => {
         backgroundColor:'#282C34',
         transition: 'all 0.3s ease-in-out',
         overflow: 'hidden',
+
         
     }
 
@@ -115,13 +119,13 @@ const CoinPortfolioCard = (props) => {
     } else {
 
         return (
-            <div onMouseEnter = {handleHover} onMouseLeave = {handleHoverLeave}>
+            <div>
                 {clicked ? 
-                <CoinCardExpand coin = {props.coin} transactions = {props.transactions} setClicked = {setClicked} clicked = {clicked} profitCalc = {transactionProfitLossPercentage()} />
+                <CoinCardExpand currentPrice = {data[0].current_price} coin = {props.coin} transactions = {props.transactions} setClicked = {setClicked} clicked = {clicked} profitCalc = {transactionProfitLossPercentage()} />
                 
                 :
 
-                <div style={cardStyles} onClick = {() => setClicked(!clicked)} >
+                <div style={cardStyles} onClick = {() => setClicked(!clicked)} onMouseEnter = {handleHover} onMouseLeave = {handleHoverLeave}>
                 
                     <div style={{gridRowStart: '1', gridRowEnd: '3', fontSize: '50px', marginLeft: '15px', marginRight: 'auto', color: 'white'}}>
                         <img src = {data[0].image} alt = "coin icon" style = {{height: '50px', width: '50px'}}/>
