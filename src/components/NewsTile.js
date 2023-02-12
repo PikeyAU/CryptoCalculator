@@ -12,6 +12,7 @@ const NewsTile = (props) => {
         height: '35vh',
         width: '25vw',
         margin: 'auto',
+        marginBottom: '15px',
         marginTop: '4vh',
         borderRadius: '15px',
         backgroundColor:'#282C34',
