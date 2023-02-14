@@ -59,7 +59,7 @@ const Portfolio = () => {
             coin_buy_date
           });
         });
-      
+
         return compiledTransactions;
         
       };

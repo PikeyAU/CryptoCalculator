@@ -97,3 +97,10 @@ class GetPortfolioHolding(APIView):
                     "coin_buy_date": holding.coin_buy_date,
                })
           return Response(data)
+
+class DeleteHolding(APIView):
+     permission_classes = (IsAuthenticated,)
+     def post(self, request):
+          holding_id = request.data["id"]
+          Holding.objects.get(id=holding_id).delete()
+          return Response("Holding Deleted")
