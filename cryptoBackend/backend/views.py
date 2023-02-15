@@ -104,3 +104,12 @@ class DeleteHolding(APIView):
           holding_id = request.data["id"]
           Holding.objects.get(id=holding_id).delete()
           return Response("Holding Deleted")
+
+class EditHolding(APIView):
+     permission_classes = (IsAuthenticated,)
+     def post(self, request):
+          holding_id = request.data["id"]
+          holding = Holding.objects.get(id=holding_id)
+          holding.coin_quantity = request.data["amount"]
+          holding.save()
+          return Response("Holding Edited")

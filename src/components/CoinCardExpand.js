@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BsTrash } from 'react-icons/bs'
+import { AiOutlineEdit, AiOutlineSave } from 'react-icons/ai'
+
 import axios from 'axios'
 
 const CoinCardExpand = (props) => {
@@ -8,6 +10,10 @@ const CoinCardExpand = (props) => {
     const [isHover, setIsHover] = useState(false);
     const [transactionLength , setTransactionLength] = useState(0);
     const [isHoverTrash, setIsHoverTrash] = useState(false);
+    const [editing, setEditing] = useState({});
+    const [amount, setAmount] = useState(0);
+    const [buyPrice, setBuyPrice] = useState(0);
+    const [buyDate, setBuyDate] = useState(new Date());
 
     const clicked = props.clicked
 
@@ -60,6 +66,15 @@ const CoinCardExpand = (props) => {
         setIsHoverTrash(false)
     }
 
+    const handleEdit = (id) => {
+        setEditing({ ...editing, [id]: true})
+    }
+
+    const handleSave = (id) => {
+        setEditing({ ...editing, [id]: false})
+        editHolding(id)
+    }
+
 
     function deleteHolding(id) {
         const response = axios.post('http://localhost:8000/api/user/delete/holding/', {id: id},
@@ -72,6 +87,23 @@ const CoinCardExpand = (props) => {
         )
 
     }
+
+    function editHolding(id) {
+        const response = axios.post('http://localhost:8000/api/user/edit/holding/', {
+            id: id,
+            amount: amount
+            },
+            
+
+            {headers: {'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
+        .then((response) => {
+            console.log(response)
+        }
+        )
+    }
+
+
 
     useEffect(() => {
         setTransactionLength(5 + (props.transactions.length * 2.5))
@@ -89,14 +121,20 @@ const CoinCardExpand = (props) => {
                 <div style = {{gridColumnStart: 5, gridColumnEnd: 6, marginRight: '20%'}}>Profit/Loss</div>
 
             {props.transactions.map((transaction, index)  => {
+                const isEditing = editing[transaction.id]
                 return (
                     <div key = {transaction.id} style = {{...cardStyles2, top: `${index * 35}px`, marginTop: '5%', marginLeft: '1.5%' }} >
                         <div style = {{gridColumnStart: 1, gridColumnEnd: 2, width: '19%'}}>{transaction.coin_buy_date}</div>
-                        <div style = {{gridColumnStart: 2, gridColumnEnd: 3, width: '19%'}}>{transaction.coin_quantity}</div>
+                        {isEditing ? <input style = {{gridColumnStart: 2, gridColumnEnd: 3, width: '19%', color: 'red' }} type = 'number' value = {amount} onChange = {(e) => setAmount(e.target.value)}></input> : <div style = {{gridColumnStart: 2, gridColumnEnd: 3, width: '19%'}}>{transaction.coin_quantity}</div>}
+                        {/*<div style = {{gridColumnStart: 2, gridColumnEnd: 3, width: '19%'}}>{transaction.coin_quantity}</div>*/}
                         <div style = {{gridColumnStart: 3, gridColumnEnd: 4, width: '19%'}}>{transaction.coin_buy_price}</div>
                         <div style = {{gridColumnStart: 4, gridColumnEnd: 5, width: '19%'}}>{transaction.coin_quantity * transaction.coin_buy_price}</div>
                         <div style = {{gridColumnStart: 5, gridColumnEnd: 6, width: '19%', color: transaction.coin_buy_price < props.currentPrice ? 'green' : 'red'}}>{((transaction.coin_quantity * (props.currentPrice - transaction.coin_buy_price)) / (transaction.coin_quantity * transaction.coin_buy_price) * 100).toFixed(2)}%</div>
                         <div style= {{marginRight: '3%', cursor: 'pointer', color: isHoverTrash ? '#DB7D13' : 'white'}}><BsTrash onMouseEnter={handleDeleteHover} onMouseLeave = {handleDeleteHoverLeave} onClick = {() => deleteHolding(transaction.id)}/></div>
+                        {isEditing ? <div style= {{marginRight: '3%', cursor: 'pointer'}}><AiOutlineSave onClick = {() => handleSave(transaction.id)} /></div>
+                        : <div style= {{marginRight: '3%', cursor: 'pointer'}} ><AiOutlineEdit onClick = {() => handleEdit(transaction.id)}/></div>}
+                        
+                        
                     </div>
                 )
             })}
