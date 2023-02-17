@@ -13,10 +13,12 @@ const Navbar = () => {
     const styles = {
         nav: {
             display: 'flex',
-            justifyContent: 'space-around',
+            justifyContent: 'right',
+            gap: '20px',
             width: '100vw',
             height: '5vh',
-            margin: 'auto'
+            margin: 'auto',
+            
             
         },
         link: {
