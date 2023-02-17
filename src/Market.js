@@ -61,7 +61,7 @@ const Market = () => {
 
 
     return (
-        <div style = {{background: '#282c34', height: '100vh', backgroundSize: 'cover'}}>
+        <div style = {{background: '#282c34', height: numReturned  > 6 ? `${100 + (numReturned / 3) * 27}vh` : '100vh', overflow: 'hidden'}}>
             <Navbar />
             <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10}}>
             {loading ? <div style = {{margin: 'auto'}}>Loading</div> :
