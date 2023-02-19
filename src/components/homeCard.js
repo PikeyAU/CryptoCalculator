@@ -22,7 +22,7 @@ const HomeCard = (props) => {
         else if (props.text === "Portfolio") {
             window.location.href = "/portfolio";
         }
-        else if (props.text === "Crypto Market") {
+        else if (props.text === "Crypto News") {
             window.location.href = "/market";
         }
     }

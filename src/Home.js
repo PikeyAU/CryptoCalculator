@@ -31,7 +31,7 @@ const Home = () => {
             <div style={grid_styles}>
                 <HomeCard text="Dollar Cost Average" />
                 <HomeCard text="Portfolio" />
-                <HomeCard text="Crypto Market" />
+                <HomeCard text="Crypto News" />
             </div>
         </div>
     );
