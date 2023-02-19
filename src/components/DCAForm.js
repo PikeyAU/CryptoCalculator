@@ -121,7 +121,7 @@ const DCAForm = ({handleFormSubmit}) => {
     }
 
     return (
-        <div style = {{width: '35vw', height: '50vh', display: 'flex', justifyContent:'center', position: 'relative', marginTop: '10vh', marginLeft: '2vw'}}>
+        <div style = {{width: '35vw', height: '35vh', display: 'flex', justifyContent:'center', position: 'relative', marginTop: '10vh', marginLeft: '2vw'}}>
             <Form onSubmit = {handleSubmit} style = {{display: 'inline-block', textAlign: 'left', padding: '50px 50px 50px 50px',  borderRadius: 50, background: '#282c34', boxShadow:  '31px 31px 62px #22252c, -31px -31px 62px #2e333c'}}>
                 <FormGroup>
                     <Label style={labelStyle} for="search">Search</Label>
