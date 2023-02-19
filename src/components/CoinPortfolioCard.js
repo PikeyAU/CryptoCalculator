@@ -121,7 +121,7 @@ const CoinPortfolioCard = (props) => {
         return (
             <div>
                 {clicked ? 
-                <CoinCardExpand currentPrice = {data[0].current_price} coin = {props.coin} transactions = {props.transactions} setClicked = {setClicked} clicked = {clicked} profitCalc = {transactionProfitLossPercentage()} />
+                <CoinCardExpand trigger = {props.onDataFromChild} currentPrice = {data[0].current_price} coin = {props.coin} transactions = {props.transactions} setClicked = {setClicked} clicked = {clicked} profitCalc = {transactionProfitLossPercentage()} />
                 
                 :
 

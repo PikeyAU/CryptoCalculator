@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import { BsTrash } from 'react-icons/bs'
-import { AiOutlineEdit, AiOutlineSave, AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai'
+import { AiOutlineEdit, AiOutlineSave, AiOutlineArrowLeft, AiOutlineClose, AiOutlineCheck } from 'react-icons/ai'
 
 import axios from 'axios'
 
@@ -16,6 +16,8 @@ const CoinCardExpand = (props) => {
     const [editHover, setEditHover] = useState({});
     const [trashHover, setTrashHover] = useState({});
     const [cancelHover, setCancelHover] = useState({});
+    const [confirmHover, setConfirmHover] = useState({});
+    const [deleting, setDeleting] = useState({});
 
     const clicked = props.clicked
 
@@ -113,7 +115,22 @@ const CoinCardExpand = (props) => {
         setCancelHover({...cancelHover, [id]: false})
     }
 
-    
+    const handleConfirmHover = (id) => {
+        setConfirmHover({...confirmHover, [id]: true})
+    }
+
+    const handleConfirmHoverLeave = (id) => {
+        setConfirmHover({...confirmHover, [id]: false})
+    }
+
+    const handleDelete = (id) => {
+        setDeleting({...deleting, [id]: true})
+    }
+
+    const handleCancelDelete = (id) => {
+        setDeleting({...deleting, [id]: false})
+    }
+
     function deleteHolding(id) {
         const response = axios.post('http://localhost:8000/api/user/delete/holding/', {id: id},
 
@@ -121,10 +138,20 @@ const CoinCardExpand = (props) => {
                         'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
         .then((response) => {
             console.log(response)
+            props.trigger(response.data)
         }
         )
 
     }
+
+    function handleDeleteClick(id) {
+        setDeleting({...deleting, [id]: true})
+    }
+
+    function cancelDeleteHolding(id) {
+        setDeleting({...deleting, [id]: false})
+    }
+
 
     function editHolding(id) {
         const response = axios.post('http://localhost:8000/api/user/edit/holding/', {
@@ -165,9 +192,11 @@ const CoinCardExpand = (props) => {
 
             {props.transactions.map((transaction, index)  => {
                 const isEditing = editing[transaction.id]
+                const isDelete = deleting[transaction.id]
                 const isEditHover = editHover[transaction.id]
                 const isHoverTrash = trashHover[transaction.id]
                 const isHoverCancel = cancelHover[transaction.id]
+        
                 
                 return (
                     <div key = {transaction.id} style = {{...cardStyles2, top: `${index * 35}px`, marginTop: '5%', marginLeft: '1.5%' }} >

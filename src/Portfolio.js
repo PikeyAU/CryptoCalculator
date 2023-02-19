@@ -96,6 +96,10 @@ const Portfolio = () => {
         if (data === "Coin Added to Portfolio") {
             setTriggerMessage(true);
         }
+        if (data === "Holding Deleted") {
+            setTriggerMessage(true);
+            console.log("Holding Deleted")
+        }
     } 
 
 
@@ -106,6 +110,7 @@ const Portfolio = () => {
             }
 
             fetchUserCoinData();
+            setTriggerMessage(false);
             
     
         }, [triggerMessage]);
@@ -122,6 +127,7 @@ const Portfolio = () => {
                         key = {coin}
                         coin = {coin}
                         transactions = {userCoinData[coin]}
+                        onDataFromChild = {handleDataFromChild}
                     />
                 )
             }
