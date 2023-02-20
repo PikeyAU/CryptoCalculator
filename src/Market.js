@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './components/navbar';
 import NewsTile from './components/NewsTile';
+import { BounceLoader } from 'react-spinners';
 
 
 
@@ -37,12 +38,13 @@ const Market = () => {
         .then(console.log(newsData));
         
         setSplitData(newsData.slice(0, numReturned));
+        setLoading(false);
 
     }
 
     useEffect(() => {
         getNews();
-        setLoading(false);
+        
 
     }, [newsData]);
 
@@ -64,7 +66,7 @@ const Market = () => {
         <div style = {{background: '#282c34', height: numReturned  > 6 ? `${100 + (numReturned / 3) * 27}vh` : '100vh', overflow: 'hidden'}}>
             <Navbar />
             <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10}}>
-            {loading ? <div style = {{margin: 'auto'}}>Loading</div> :
+            {loading ? <div style = {{marginRight: 'auto', marginLeft: 'auto', gridColumnStart: 2}}><BounceLoader/></div> :
             splitData.map((news) => {
                 return (
                     <NewsTile
@@ -77,7 +79,8 @@ const Market = () => {
                 )
             })}
             </div>
-            <div style = {showMoreStyle} onMouseEnter={handleHover} onMouseLeave={handleLeave} onClick = {handleClick} >Show More</div>
+            
+            {loading ? null : <div style = {showMoreStyle} onMouseEnter={handleHover} onMouseLeave={handleLeave} onClick = {handleClick} >Show More</div>}
         </div>
     );
 }

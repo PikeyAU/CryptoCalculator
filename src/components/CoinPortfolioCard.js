@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CoinCardExpand from './CoinCardExpand';
+import { BounceLoader } from 'react-spinners';
 
 const CoinPortfolioCard = (props) => {
     const [data, setData] = useState([{}]);
@@ -113,9 +114,7 @@ const CoinPortfolioCard = (props) => {
 
         
     if (loading) {
-        return <div>Loading...</div>
-    } else if (error) {
-        return <div>Error</div>
+        return <div style={{...cardStyles, margin: 'auto'}}><BounceLoader/></div>
     } else {
 
         return (
