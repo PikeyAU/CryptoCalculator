@@ -26,7 +26,22 @@ const Home = () => {
     return (
         <div style={{backgroundColor: '#282C34', height: '100vh', position: 'relative'}}>
             <Navbar />
-            <NavBanner />
+            <div style={{overflow: 'hidden', width: '100%'}}>
+                <div style={{float: 'left', width: '100%', animation: 'carousel 20s linear infinite'}}>
+                    <NavBanner />
+                </div>
+            </div>
+            <style>{`
+                @keyframes carousel {
+                    0% {
+                        transform: translateX(125%);
+                        }
+                    100% {
+                         transform: translateX(-125%);
+                        }
+                    }
+                `}
+            </style>
             <div style={home_styles}>
                     <HomeCard text="Dollar Cost Average" />
                     <HomeCard text="Portfolio" />

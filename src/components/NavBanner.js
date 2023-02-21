@@ -39,7 +39,7 @@ const NavBanner = () => {
         return (
             <div style={{display: 'flex', justifyContent: 'space-around', flexDirection: 'row'}} >
                 {data.map(coin => (
-                    <div key={coin.id} style= {{height: 40, marginTop: 10}}>
+                    <div key={coin.id} style= {{height: 100, marginTop: 10}}>
                         
 
                         <a href = {'https://www.coingecko.com/en/coins/' + coin.id} target="_blank"> <img src={coin.image} alt={coin.name} height="40px" /></a>
