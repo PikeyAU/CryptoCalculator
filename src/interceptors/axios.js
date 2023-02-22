@@ -21,8 +21,14 @@ axios.interceptors.response.use(resp => resp, async error => {
 
             return axios(error.config);
 
-        }
-    }
+        } else {
+                
+                return Promise.reject(error);
+    
+            }
+
+
+    } 
 
     refresh = false;
 
