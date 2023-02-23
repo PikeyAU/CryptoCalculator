@@ -9,6 +9,7 @@ const Navbar = () => {
 
     const [username, setUsername] = useState(null);
     const [isAuth, setIsAuth] = useState(false);
+    const [data, setData] = useState([{}]);
 
     const styles = {
         nav: {
@@ -45,14 +46,31 @@ const Navbar = () => {
         } catch (error) {
             console.log(error);
         }
+        }
     }
-}
+
+    const getGlobalInfo = async() => {
+        const url = `https://api.coingecko.com/api/v3/global`
+        try {
+            const response = await fetch(url);
+            if (response.ok) {
+                const json = await response.json();
+                setData(json.data.total_market_cap.usd);
+            } else {
+                throw response;
+            }
+        } catch (error) {
+            console.error('Error fetching data: ', error);
+        };
+    }
+
 
 
     
 
     useEffect (() => {
         getUserInfo(); 
+        getGlobalInfo();
     }, []);
 
 
@@ -60,7 +78,7 @@ const Navbar = () => {
     return (
         <div>
             <nav style={styles.nav}>
-
+                <div style={{color: 'white', fontSize: '2vh', marginTop: 15, marginRight:'auto', marginLeft: 'auto'}}>Total Market Cap: $USD {data.toLocaleString()}</div>
                 <Link to="/" style={styles.link}>Home</Link>
                 <Link to="/dca" style={styles.link}>Dollar Cost Average</Link>
                 <Link to="/portfolio" style={styles.link}>Portfolio</Link>
