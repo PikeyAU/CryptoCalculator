@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { TbArrowBigDownLines }  from 'react-icons/tb';
 import { TbArrowBigUpLines } from 'react-icons/tb';
 
+{/*
+
+    This component is responsible for displaying the top 10 coins in the market.
+    It uses the coingecko API to get the data.
+    
+*/}
 
 const NavBanner = () => {
 
