@@ -78,7 +78,7 @@ const Navbar = () => {
     return (
         <div>
             <nav style={styles.nav}>
-                <div style={{color: 'white', fontSize: '2vh', marginTop: 15, marginRight:'auto', marginLeft: 'auto'}}>Total Market Cap: $USD {data.toLocaleString()}</div>
+                <div style={{color: 'white', fontSize: '2vh', marginTop: 15, marginLeft: 'auto'}}>Total Market Cap: $USD {(data / 1000000000000).toFixed(3)}T</div>
                 <Link to="/" style={styles.link}>Home</Link>
                 <Link to="/dca" style={styles.link}>Dollar Cost Average</Link>
                 <Link to="/portfolio" style={styles.link}>Portfolio</Link>
