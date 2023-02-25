@@ -8,11 +8,6 @@ import Logout from './Logout';
 import Register from './Register';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-{/*
-  This is the main component of the app. It is responsible for routing the user to the correct page.
-  It also sets the title of the page.
-*/}
-
 
 function App() {
 

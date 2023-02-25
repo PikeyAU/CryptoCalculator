@@ -2,13 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { TbArrowBigDownLines }  from 'react-icons/tb';
 import { TbArrowBigUpLines } from 'react-icons/tb';
 
-{/*
-
-    This component is responsible for displaying the top 10 coins in the market.
-    It uses the coingecko API to get the data.
-    
-*/}
-
 const NavBanner = () => {
 
     const [data, setData] = useState([{}]);
@@ -48,7 +41,7 @@ const NavBanner = () => {
                     <div key={coin.id} style= {{height: 100, marginTop: 10}}>
                         
 
-                        <a href = {'https://www.coingecko.com/en/coins/' + coin.id} target="_blank"> <img src={coin.image} alt={coin.name} height="40px" /></a>
+                        <a href = {'https://www.coingecko.com/en/coins/' + coin.id} target="_blank" rel='noreferrer'> <img src={coin.image} alt={coin.name} height="40px" /></a>
                         <p>{coin.price_change_percentage_24h > 0 ? <span style={{color: 'green', lineHeight: 0, verticalAlign: 'midlle'}}>{coin.price_change_percentage_24h.toFixed(2)}% <TbArrowBigUpLines /></span> : <span style={{color: 'red',lineHeight: 0, verticalAlign: 'midlle'}}>{coin.price_change_percentage_24h.toFixed(2)}% <TbArrowBigDownLines/></span> }</p>
 
                     </div>
